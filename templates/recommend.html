@@ -12,7 +12,7 @@
   }
   .card-img-top {
     width: 100%; /* Adjust this value as needed */
-    height: 250px; /* Maintain aspect ratio */
+    height: auto; /* Maintain aspect ratio */
     max-width: 150px; /* Add a max-width to limit the size */
   }
   .card {
@@ -45,10 +45,17 @@
             background-color: black;
             padding: 10px 0;
   }
+  .book-img {
+        display: block; /* Ensure the images are displayed as block elements */
+        margin-top: 100px; /* Add some space below the submit button */
+      }
+  .search-bar {
+        width: 90%; /* Adjust the width as needed */
+      }
   .book-title {
         text-align: center; /* Center align the book title */
         width: 100%; /* Ensure the title takes up the full width of its container */
-        margin-top: 5px;/* Add some space above the title */
+        margin-top: 5px; /* Add some space above the title */
         margin-bottom:0;
       }
   .book-container {
@@ -56,18 +63,6 @@
         margin: auto; /* Center the container */
       }
   .book-author{
-        text-align: center; /* Center align the book title */
-        width: 100%; /* Ensure the title takes up the full width of its container */
-        margin-top: 0; /* Add some space above the title */
-        margin-bottom: 0;
-  }
-  .book-votes{
-        text-align: center; /* Center align the book title */
-        width: 100%; /* Ensure the title takes up the full width of its container */
-        margin-top: 0; /* Add some space above the title */
-        margin-bottom: 0;
-  }
-  .book-rating{
         text-align: center; /* Center align the book title */
         width: 100%; /* Ensure the title takes up the full width of its container */
         margin-top: 0; /* Add some space above the title */
@@ -89,7 +84,7 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/about">About</a>
           </li>
-           <li class="nav-item">
+          <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/recommend">Recommend</a>
           </li>
           <li class="nav-item">
@@ -108,24 +103,29 @@
   <div class="container content">
     <div class="row">
       <div class="heading" style="margin-top:30px">
-        <h1 class="text-white" style="font-size:30px"><b>TOP 50 BOOKS</b></h1>
+        <h1 class="text-white" style="font-size:30px"><b>Recommend Books</b></h1>
+        <form action="/recommend_books" method="post">
+          <input name="user_input" type="text" class="form-control search-bar"><br>
+          <input type="submit" class="btn btn-lg btn-warning">
+        </form>
       </div>
 
-      {% for i in range(book_name|length)%}
-        <div class="col-md-2" style="margin-top:0px">
-          <div class="card">
-            <div class="card-body">
-              <div class="book-container">
-                <img class="card-img-top" src="{{ image[i] }}">
-                <h5 class="text-white book-title">{{ book_name[i] }}</h5>
-                <p class="text-white book-author">{{ author[i] }}</p>
-                <p class="text-white book-votes">Votes-{{ votes[i] }}</p>
-                <p class="text-white book-rating">Ratings-{{ rating[i] }}</p>
+      {% if data %}
+        {% for i in data %}
+          <div class="col-md-2" style="margin-top:0px">
+            <div class="card">
+              <div class="card-body">
+                <div class="book-container">
+                  <img class="card-img-top book-img" src="{{i[2]}}">
+                  <h5 class="text-white book-title">{{i[0]}}</h5>
+                  <p class="text-white book-author">{{i[1]}}</p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      {% endfor %}
+        {% endfor %}
+      {% endif %}
+
 
 
 
